@@ -35,9 +35,7 @@ export default function ContactExperience() {
   const renderFAQs = () => {
     const faqs = faqContent[persona] || faqContent.unsure;
     return faqs.map((faq, index) => (
-      <li key={index} className="space-y-2 text-sm text-gray-700">
-        {faq}
-      </li>
+      <li key={index} className="space-y-2 text-sm text-gray-700">❓ {faq}</li>
     ));
   };
 
@@ -51,12 +49,6 @@ export default function ContactExperience() {
   const handleQuickAction = (label) => {
     if (portalLinks.includes(label)) {
       alert(`This link will take them to the ${label}.`);
-    } else if (
-      label === "Find an FM office (US or International)" ||
-      label === "Get a quote"
-    ) {
-      setShowMap(true);
-      setActiveForm(label);
     } else {
       setActiveForm(label);
     }
@@ -120,9 +112,30 @@ export default function ContactExperience() {
   );
 
   const regionSelector = (
-    <div className="flex items-center gap-2">
-      <p className="text-sm">🌐 Your region: <strong>{location}</strong></p>
-      <button className="text-blue-600 text-sm underline" onClick={() => setShowMap(true)}>Change</button>
+    <div className="flex flex-col gap-2">
+      <div className="flex items-center gap-2">
+        <p className="text-sm">🌐 Your region: <strong>{location}</strong></p>
+        <button className="text-blue-600 text-sm underline" onClick={() => setShowMap(!showMap)}>Change</button>
+      </div>
+      {showMap && (
+        <div className="bg-gray-100 p-4 rounded">
+          <p className="text-sm mb-2">Select your region:</p>
+          <div className="grid grid-cols-2 gap-2">
+            {["United States", "Europe", "Asia", "Other"].map((region) => (
+              <button
+                key={region}
+                className="border rounded px-3 py-1 hover:bg-blue-100"
+                onClick={() => {
+                  setLocation(region);
+                  setShowMap(false);
+                }}
+              >
+                {region}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 
@@ -148,16 +161,28 @@ export default function ContactExperience() {
 
   return (
     <div className="p-6 max-w-4xl mx-auto space-y-6 relative animate-fade-in">
-      {/* Chatbot Button */}
-      <div className="fixed bottom-4 right-4 bg-blue-600 text-white p-3 rounded-full shadow-lg cursor-pointer z-50" onClick={() => setChatbotOpen(!chatbotOpen)}>
-        💬 Chat with us
+      <div className="fixed bottom-4 right-4 z-50">
+        <button
+          className="bg-blue-600 text-white p-3 rounded-full shadow-lg cursor-pointer"
+          onClick={() => setChatbotOpen(true)}
+        >
+          💬 Chat with us
+        </button>
       </div>
 
       {chatbotOpen && (
-        <div className="fixed bottom-0 right-0 bg-white shadow-lg rounded-t-xl p-4 w-full sm:w-96 z-50">
-          <h3 className="font-semibold text-lg mb-3">Chat with us</h3>
-          <textarea placeholder="How can we assist you today?" className="mb-3 w-full p-2 border rounded" />
-          <button className="bg-blue-600 text-white px-4 py-2 rounded">Send</button>
+        <div className="fixed inset-0 bg-black bg-opacity-40 flex items-end sm:items-center justify-center z-50">
+          <div className="bg-white shadow-lg rounded-xl p-4 w-full sm:w-96 relative">
+            <button
+              className="absolute top-2 right-2 text-gray-500 hover:text-gray-800"
+              onClick={() => setChatbotOpen(false)}
+            >
+              ❌
+            </button>
+            <h3 className="font-semibold text-lg mb-3">Chat with us</h3>
+            <textarea placeholder="How can we assist you today?" className="mb-3 w-full p-2 border rounded" />
+            <button className="bg-blue-600 text-white px-4 py-2 rounded">Send</button>
+          </div>
         </div>
       )}
 
@@ -190,6 +215,34 @@ export default function ContactExperience() {
           </>
         )}
       </div>
+
+      {activeForm && (
+        <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
+          <div className="bg-white rounded-xl shadow-lg p-6 w-full max-w-md relative">
+            <button
+              className="absolute top-2 right-2 text-gray-500 hover:text-gray-800"
+              onClick={() => setActiveForm("")}
+            >
+              ❌
+            </button>
+            <h4 className="font-semibold mb-2 text-lg">📝 {activeForm}</h4>
+            <textarea
+              placeholder={`Enter details for: ${activeForm}`}
+              className="w-full p-2 border rounded"
+              rows={4}
+            ></textarea>
+            <div className="mt-4 flex justify-end gap-2">
+              <button
+                className="text-sm text-gray-600 underline"
+                onClick={() => setActiveForm("")}
+              >
+                Cancel
+              </button>
+              <button className="bg-blue-600 text-white px-4 py-1 rounded">Submit</button>
+            </div>
+          </div>
+        </div>
+      )}
 
       <div className="pt-6 border-t text-sm text-gray-600 space-y-2">
         <p className="font-medium">Need help right away?</p>
