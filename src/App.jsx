@@ -1,8 +1,4 @@
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 
 export default function ContactExperience() {
   const [chatbotOpen, setChatbotOpen] = useState(false);
@@ -126,16 +122,16 @@ export default function ContactExperience() {
   const regionSelector = (
     <div className="flex items-center gap-2">
       <p className="text-sm">🌐 Your region: <strong>{location}</strong></p>
-      <Button variant="link" className="text-sm -ml-1" onClick={() => setShowMap(true)}>Change</Button>
+      <button className="text-blue-600 text-sm underline" onClick={() => setShowMap(true)}>Change</button>
     </div>
   );
 
   const personaSelector = (
     <div className="grid grid-cols-2 gap-4">
       {Object.keys(quickOptionsMap).map((key) => (
-        <Button
+        <button
           key={key}
-          variant={persona === key ? "default" : "outline"}
+          className={`border rounded px-4 py-2 ${persona === key ? 'bg-blue-600 text-white' : 'bg-white text-black'}`}
           onClick={() => handlePersonaSelect(key)}
         >
           {key === "prospect"
@@ -145,7 +141,7 @@ export default function ContactExperience() {
             : key === "broker"
             ? "📊 I’m a broker or business partner"
             : "❓ I’m not sure / other"}
-        </Button>
+        </button>
       ))}
     </div>
   );
@@ -160,42 +156,40 @@ export default function ContactExperience() {
       {chatbotOpen && (
         <div className="fixed bottom-0 right-0 bg-white shadow-lg rounded-t-xl p-4 w-full sm:w-96 z-50">
           <h3 className="font-semibold text-lg mb-3">Chat with us</h3>
-          <Textarea placeholder="How can we assist you today?" className="mb-3" />
-          <Button className="bg-blue-600 text-white">Send</Button>
+          <textarea placeholder="How can we assist you today?" className="mb-3 w-full p-2 border rounded" />
+          <button className="bg-blue-600 text-white px-4 py-2 rounded">Send</button>
         </div>
       )}
 
-      <Card>
-        <CardContent className="p-6 space-y-6">
-          <div className="flex justify-between items-start">
-            <div>
-              <h2 className="text-xl font-semibold">Let’s Get You to the Right Place</h2>
-              <p className="text-sm text-gray-600">Tell us who you are so we can personalize your help experience.</p>
-            </div>
-            <div className="text-right">{regionSelector}</div>
+      <div className="bg-white shadow rounded p-6 space-y-6">
+        <div className="flex justify-between items-start">
+          <div>
+            <h2 className="text-xl font-semibold">Let’s Get You to the Right Place</h2>
+            <p className="text-sm text-gray-600">Tell us who you are so we can personalize your help experience.</p>
           </div>
+          <div className="text-right">{regionSelector}</div>
+        </div>
 
-          {personaSelector}
+        {personaSelector}
 
-          {persona === "" ? (
-            <>
-              <div className="pt-6">
-                <h3 className="text-md font-semibold mb-2">Frequently Asked Questions</h3>
-                <ul className="space-y-2 text-sm text-gray-700">{renderFAQs()}</ul>
-              </div>
-              {renderQuickActions()}
-            </>
-          ) : (
-            <>
-              {renderQuickActions()}
-              <div className="pt-6">
-                <h3 className="text-md font-semibold mb-2">Frequently Asked Questions</h3>
-                <ul className="space-y-2 text-sm text-gray-700">{renderFAQs()}</ul>
-              </div>
-            </>
-          )}
-        </CardContent>
-      </Card>
+        {persona === "" ? (
+          <>
+            <div className="pt-6">
+              <h3 className="text-md font-semibold mb-2">Frequently Asked Questions</h3>
+              <ul className="space-y-2 text-sm text-gray-700">{renderFAQs()}</ul>
+            </div>
+            {renderQuickActions()}
+          </>
+        ) : (
+          <>
+            {renderQuickActions()}
+            <div className="pt-6">
+              <h3 className="text-md font-semibold mb-2">Frequently Asked Questions</h3>
+              <ul className="space-y-2 text-sm text-gray-700">{renderFAQs()}</ul>
+            </div>
+          </>
+        )}
+      </div>
 
       <div className="pt-6 border-t text-sm text-gray-600 space-y-2">
         <p className="font-medium">Need help right away?</p>
