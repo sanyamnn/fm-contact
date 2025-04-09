@@ -11,7 +11,7 @@ export default function ContactExperience() {
 
   const faqContent = {
     prospect: [
-      "How do I become an FM Global client?",
+      "How do I become an FM client?",
       "How do I request a quote?",
       "How do I contact sales?",
     ],
@@ -21,13 +21,13 @@ export default function ContactExperience() {
       "How do I update my policy?",
     ],
     broker: [
-      "How do I contact FM Global for broker inquiries?",
+      "How do I contact FM for broker inquiries?",
       "Where can I access the Broker Portal?",
       "How do I submit client information?",
     ],
     unsure: [
-      "How do I contact FM Global?",
-      "Where is the nearest FM Global office?",
+      "How do I contact FM?",
+      "Where is the nearest FM office?",
       "How do I get help with my inquiries?",
     ],
   };
@@ -75,9 +75,9 @@ export default function ContactExperience() {
       { label: "Access Broker Portal", description: "Sign in to manage clients and submissions." },
     ],
     unsure: [
-      { label: "Find an FM office (US or International)", description: "Locate an FM Global office anywhere in the world." },
-      { label: "General contact", description: "Submit a general inquiry to FM Global." },
-      { label: "Explore Careers", description: "Learn about working at FM Global and view job openings." },
+      { label: "Find an FM office (US or International)", description: "Locate an FM office anywhere in the world." },
+      { label: "General contact", description: "Submit a general inquiry to FM." },
+      { label: "Explore Careers", description: "Learn about working at FM and view job openings." },
       { label: "Media contacts", description: "Reach our communications team." }
     ]
   };
@@ -86,14 +86,14 @@ export default function ContactExperience() {
     <div className="pt-6">
       <h3 className="text-md font-semibold mb-2">
         {persona === "prospect"
-          ? "Let’s help you explore working with FM Global"
+          ? "Let’s help you explore working with FM"
           : persona === "client"
           ? "Here’s how you can get what you need as a client"
           : persona === "broker"
           ? "Broker support: How can we help you today?"
           : persona === "unsure"
           ? "Not sure where to start? We're here to guide you."
-          : "Let’s help you explore working with FM Global"}
+          : "Let’s help you explore working with FM"}
       </h3>
       <ul className="space-y-2 text-sm text-gray-800 animate-fade-in">
         {(quickOptionsMap[persona] || quickOptionsMap.unsure).map((item, idx) => (
@@ -150,7 +150,7 @@ export default function ContactExperience() {
           {key === "prospect"
             ? "💼 I’m a prospective client"
             : key === "client"
-            ? "🏢 I’m an existing FM Global client"
+            ? "🏢 I’m an existing FM client"
             : key === "broker"
             ? "📊 I’m a broker or business partner"
             : "❓ I’m not sure / other"}
